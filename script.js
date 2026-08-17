@@ -10,12 +10,19 @@ setInterval(tickClock, 1000);
 tickClock();
 
 function updateUI(data) {
-  let available = 0;
+  // ดึงค่าระยะทางและสถานะ รองรับทั้งตัวพิมพ์เล็กและพิมพ์ใหญ่
+  let d1 = data.distance1 !== undefined ? data.distance1 : (data.Distance1 !== undefined ? data.Distance1 : 0);
+  let s1 = data.status1 !== undefined ? data.status1 : (data.Status1 !== undefined ? data.Status1 : 'ว่าง');
   
+  let d2 = data.distance2 !== undefined ? data.distance2 : (data.Distance2 !== undefined ? data.Distance2 : 0);
+  let s2 = data.status2 !== undefined ? data.status2 : (data.Status2 !== undefined ? data.Status2 : 'ว่าง');
+
   const slots = [
-    { distance: data.distance1, occupied: (data.status1 === 'มีรถ') },
-    { distance: data.distance2, occupied: (data.status2 === 'มีรถ') }
+    { distance: d1, occupied: (s1 === 'มีรถ') },
+    { distance: d2, occupied: (s2 === 'มีรถ') }
   ];
+
+  let available = 0;
 
   slots.forEach((slot, i) => {
     const n = i + 1;
@@ -26,8 +33,11 @@ function updateUI(data) {
     const tag = document.getElementById('tag' + n);
     const card = document.getElementById('card' + n);
 
+    // แสดงตัวเลขระยะทาง cm
     if (distText) {
-      distText.textContent = (slot.distance !== undefined && slot.distance !== "") ? parseFloat(slot.distance).toFixed(1) : '--';
+      distText.textContent = (slot.distance !== undefined && slot.distance !== "" && !isNaN(slot.distance)) 
+        ? parseFloat(slot.distance).toFixed(1) 
+        : '--';
     }
     
     if (slot.occupied) {
