@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMART PARKING // 2 Bays</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="grid-overlay"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">◈</span>
+      <div class="brand-text">
+        <h1>SMART PARKING</h1>
+        <span class="brand-sub">ESP32 · 2 BAYS MONITOR</span>
+      </div>
+    </div>
+    <div class="topbar-status">
+      <div class="clock" id="clock">--:--:--</div>
+      <div class="link-state">
+        <span class="dot" id="linkDot"></span>
+        <span id="linkLabel">กำลังเชื่อมต่อ...</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel schematic-panel">
+      <div class="panel-head">
+        <span class="eyebrow">01 — ผังลานจอด (2 ช่อง)</span>
+        <span class="available-pill" id="availablePill">-- / -- ว่าง</span>
+      </div>
+      <svg viewBox="0 0 540 320" class="schematic">
+        <rect x="0" y="140" width="540" height="40" class="road"/>
+        <line x1="0" y1="160" x2="540" y2="160" class="road-dash"/>
+
+        <!-- ช่อง 1 -->
+        <g id="bay1">
+          <rect x="70" y="30" width="150" height="100" rx="6" class="bay-outline"/>
+          <text x="145" y="20" text-anchor="middle" class="bay-label">ช่อง 1</text>
+          <circle cx="145" cy="40" r="4" class="sensor-dot"/>
+          <line x1="145" y1="44" x2="145" y2="120" class="sensor-beam" id="beam1"/>
+          <g id="car1" class="car" opacity="0">
+            <rect x="95" y="55" width="100" height="55" rx="10" class="car-body"/>
+            <rect x="110" y="62" width="70" height="18" rx="4" class="car-glass"/>
+          </g>
+          <text x="145" y="150" text-anchor="middle" class="bay-status" id="status1">--</text>
+        </g>
+
+        <!-- ช่อง 2 -->
+        <g id="bay2">
+          <rect x="320" y="30" width="150" height="100" rx="6" class="bay-outline"/>
+          <text x="395" y="20" text-anchor="middle" class="bay-label">ช่อง 2</text>
+          <circle cx="395" cy="40" r="4" class="sensor-dot"/>
+          <line x1="395" y1="44" x2="395" y2="120" class="sensor-beam" id="beam2"/>
+          <g id="car2" class="car" opacity="0">
+            <rect x="345" y="55" width="100" height="55" rx="10" class="car-body"/>
+            <rect x="360" y="62" width="70" height="18" rx="4" class="car-glass"/>
+          </g>
+          <text x="395" y="150" text-anchor="middle" class="bay-status" id="status2">--</text>
+        </g>
+
+        <g id="fullBanner" class="full-banner" opacity="0">
+          <rect x="120" y="200" width="300" height="60" rx="8" class="full-banner-bg"/>
+          <text x="270" y="240" text-anchor="middle" class="full-banner-text">🚫 ลานจอดเต็ม</text>
+        </g>
+      </svg>
+    </section>
+
+    <section class="panel readout-panel">
+      <div class="panel-head"><span class="eyebrow">02 — ค่าระยะเซ็นเซอร์</span></div>
+      <div class="readouts">
+        <div class="readout-card" id="card1">
+          <span class="readout-label">ช่อง 1</span>
+          <span class="readout-value"><span id="dist1">--</span><small>cm</small></span>
+          <span class="readout-tag" id="tag1">รอข้อมูล</span>
+        </div>
+        <div class="readout-card" id="card2">
+          <span class="readout-label">ช่อง 2</span>
+          <span class="readout-value"><span id="dist2">--</span><small>cm</small></span>
+          <span class="readout-tag" id="tag2">รอข้อมูล</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    อัปเดตล่าสุด: <span id="lastUpdate">--</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

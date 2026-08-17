@@ -1,0 +1,100 @@
+:root {
+  --bg: #0a0e14;
+  --panel: #10151d;
+  --panel-line: #1c2530;
+  --cyan: #00e5ff;
+  --amber: #ffb400;
+  --red: #ff3b5c;
+  --green: #35e28c;
+  --text: #c9d6e3;
+  --muted: #5b6b7c;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Share Tech Mono', monospace;
+  min-height: 100vh; position: relative; overflow-x: hidden;
+}
+
+.grid-overlay {
+  position: fixed; inset: 0;
+  background-image: linear-gradient(rgba(0, 229, 255, 0.035) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 229, 255, 0.035) 1px, transparent 1px);
+  background-size: 34px 34px; pointer-events: none; z-index: 0;
+}
+
+.topbar {
+  position: relative; z-index: 1; display: flex; justify-content: space-between;
+  align-items: center; padding: 20px 32px; border-bottom: 1px solid var(--panel-line);
+}
+
+.brand { display: flex; align-items: center; gap: 14px; }
+.brand-mark { font-size: 28px; color: var(--cyan); text-shadow: 0 0 12px rgba(0,229,255,.6); }
+.brand-text h1 { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 20px; letter-spacing: 3px; color: #eef4f8; }
+.brand-sub { font-size: 11px; letter-spacing: 2px; color: var(--muted); }
+
+.topbar-status { display: flex; align-items: center; gap: 24px; }
+.clock { font-family: 'Orbitron', sans-serif; font-size: 20px; color: var(--cyan); letter-spacing: 1px; }
+.link-state { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+.dot.online { background: var(--green); box-shadow: 0 0 8px var(--green); }
+.dot.offline { background: var(--red); box-shadow: 0 0 8px var(--red); }
+
+.layout {
+  position: relative; z-index: 1; display: grid;
+  grid-template-columns: 1.5fr 1fr; gap: 18px; padding: 24px 32px;
+}
+
+.panel {
+  background: var(--panel); border: 1px solid var(--panel-line); border-radius: 10px;
+  padding: 18px 20px 22px; position: relative;
+}
+
+.panel-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.eyebrow { font-size: 11px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
+
+.available-pill {
+  font-family: 'Orbitron', sans-serif; font-size: 13px; color: var(--green);
+  border: 1px solid var(--green); border-radius: 20px; padding: 4px 14px;
+}
+.available-pill.full { color: var(--red); border-color: var(--red); }
+
+.schematic { width: 100%; height: auto; }
+.road { fill: #151c26; }
+.road-dash { stroke: var(--panel-line); stroke-width: 2; stroke-dasharray: 10 8; }
+.bay-outline { fill: none; stroke: var(--panel-line); stroke-width: 2; }
+.bay-label { fill: var(--muted); font-family: 'Orbitron', sans-serif; font-size: 13px; }
+.bay-status { fill: var(--text); font-family: 'Orbitron', sans-serif; font-size: 14px; }
+.sensor-dot { fill: var(--cyan); }
+.sensor-beam { stroke: var(--cyan); stroke-width: 2; stroke-dasharray: 4 4; opacity: .55; transition: 0.3s; }
+.sensor-beam.occupied { stroke: var(--amber); opacity: .9; }
+.car { transition: opacity .4s ease; }
+.car-body { fill: var(--amber); }
+.car-glass { fill: #0a0e14; opacity: .5; }
+.full-banner-bg { fill: rgba(255, 59, 92, 0.12); stroke: var(--red); stroke-width: 1.5; }
+.full-banner-text { fill: var(--red); font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 700; }
+
+.readouts { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.readout-card {
+  display: flex; flex-direction: column; background: #0d121a; border: 1px solid var(--panel-line);
+  border-radius: 8px; padding: 14px 16px; position: relative; transition: 0.3s;
+}
+.readout-card.occupied { border-color: var(--amber); }
+.readout-label { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+.readout-value { font-family: 'Orbitron', sans-serif; font-size: 26px; color: var(--cyan); }
+.readout-value small { font-size: 12px; color: var(--muted); margin-left: 4px; }
+
+.readout-tag {
+  position: absolute; top: 14px; right: 16px; font-size: 11px; padding: 3px 10px; border-radius: 12px;
+  background: rgba(53, 226, 140, .12); color: var(--green);
+}
+.readout-tag.occupied { background: rgba(255, 180, 0, .12); color: var(--amber); }
+
+.footer { position: relative; z-index: 1; text-align: center; font-size: 11px; color: var(--muted); padding: 16px; }
+
+@media (max-width: 768px) {
+  .layout { grid-template-columns: 1fr; }
+  .topbar { flex-direction: column; gap: 15px; align-items: flex-start; }
+}
