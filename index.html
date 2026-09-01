@@ -2,8 +2,8 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SMART PARKING </title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>SMART PARKING</title>
 <link rel="stylesheet" href="style.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,12 +16,11 @@
     <div class="brand">
       <span class="brand-mark">P</span>
       <div class="brand-text">
-        <h1>SMART PARKING </h1>
+        <h1>SMART PARKING</h1>
         <span class="brand-sub">ESP32 · ULTRASONIC REALTIME MONITOR</span>
       </div>
     </div>
     <div class="topbar-status">
-      <a href="/setup" class="setup-link" id="setupLink">⚙️ ตั้งค่าระบบ</a>
       <div class="clock" id="clock">--:--:--</div>
       <div class="link-state">
         <span class="dot" id="linkDot"></span>
@@ -33,11 +32,11 @@
   <main class="layout">
     <section class="panel schematic-panel">
       <div class="panel-head">
-        <span class="eyebrow">🚗 ผังจำลองสถานะช่องจอดรถ </span>
+        <span class="eyebrow">🚗 ผังจำลองสถานะช่องจอดรถ</span>
         <span class="available-pill" id="availablePill">-- / -- AVAILABLE</span>
       </div>
       
-      <!-- SVG กราฟิกระบบที่จอดรถแบบจัดเต็ม -->
+      <!-- SVG กราฟิกระบบที่จอดรถ -->
       <svg viewBox="0 0 540 300" class="schematic">
         <!-- ถนนด้านล่าง + ลูกศรเดินรถ -->
         <rect x="0" y="210" width="540" height="90" fill="#0b0f19"/>
@@ -61,19 +60,28 @@
           <circle cx="140" cy="63" r="3" class="sensor-dot"/>
           <line x1="140" y1="68" x2="140" y2="175" class="sensor-beam" id="beam1"/>
 
-          <!-- รูปรถ Top-View สไตล์ Cyber Sportscar (ช่อง 1) -->
+          <!-- รูปรถ Top-View สไตล์ Local (ช่อง 1) -->
           <g id="car1" class="car" opacity="0">
-            <!-- ตัวรถ -->
-            <rect x="95" y="75" width="90" height="105" rx="20" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/>
-            <!-- หลังคารถ + กระจกหน้า/หลัง -->
-            <rect x="107" y="95" width="66" height="60" rx="10" fill="#0f172a"/>
-            <path d="M 112 100 L 168 100 L 163 115 L 117 115 Z" fill="#38bdf8" opacity="0.8"/> <!-- กระจกหน้า -->
-            <path d="M 115 142 L 165 142 L 168 150 L 112 150 Z" fill="#38bdf8" opacity="0.5"/> <!-- กระจกหลัง -->
-            <!-- ไฟหน้า/ไฟท้าย -->
-            <rect x="102" y="77" width="16" height="5" rx="2" fill="#fff" filter="drop-shadow(0 0 4px #fff)"/>
-            <rect x="162" y="77" width="16" height="5" rx="2" fill="#fff" filter="drop-shadow(0 0 4px #fff)"/>
-            <rect x="105" y="173" width="20" height="4" rx="1" fill="#ef4444"/>
-            <rect x="155" y="173" width="20" height="4" rx="1" fill="#ef4444"/>
+            <!-- ล้อรถ 4 ข้าง -->
+            <rect x="91" y="85" width="6" height="20" rx="2" fill="#0f172a"/>
+            <rect x="183" y="85" width="6" height="20" rx="2" fill="#0f172a"/>
+            <rect x="91" y="145" width="6" height="20" rx="2" fill="#0f172a"/>
+            <rect x="183" y="145" width="6" height="20" rx="2" fill="#0f172a"/>
+            
+            <!-- โครงสร้างตัวรถมนโค้ง -->
+            <rect x="96" y="72" width="88" height="110" rx="24" fill="#0284c7" stroke="#38bdf8" stroke-width="2.5"/>
+            <!-- ตัวถังหลังคา -->
+            <rect x="106" y="90" width="68" height="68" rx="14" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
+            <!-- กระจกหน้ามนโค้ง -->
+            <path d="M 112 118 C 112 100, 168 100, 168 118 Z" fill="#38bdf8" opacity="0.85"/>
+            <!-- กระจกหลังมนโค้ง -->
+            <path d="M 115 142 L 165 142 C 165 152, 115 152, 115 142 Z" fill="#38bdf8" opacity="0.5"/>
+            <!-- ไฟหน้าคู่ LED -->
+            <circle cx="112" cy="76" r="4" fill="#fff" filter="drop-shadow(0 0 6px #fff)"/>
+            <circle cx="168" cy="76" r="4" fill="#fff" filter="drop-shadow(0 0 6px #fff)"/>
+            <!-- ไฟท้าย -->
+            <rect x="106" y="178" width="18" height="3" rx="1.5" fill="#ef4444" filter="drop-shadow(0 0 3px #ef4444)"/>
+            <rect x="156" y="178" width="18" height="3" rx="1.5" fill="#ef4444" filter="drop-shadow(0 0 3px #ef4444)"/>
           </g>
 
           <!-- ข้อความสถานะด้านล่างช่อง -->
@@ -97,19 +105,28 @@
           <circle cx="400" cy="63" r="3" class="sensor-dot"/>
           <line x1="400" y1="68" x2="400" y2="175" class="sensor-beam" id="beam2"/>
 
-          <!-- รูปรถ Top-View สไตล์ Cyber Sportscar (ช่อง 2) -->
+          <!-- รูปรถ Top-View สไตล์ Local (ช่อง 2) -->
           <g id="car2" class="car" opacity="0">
-            <!-- ตัวรถ -->
-            <rect x="355" y="75" width="90" height="105" rx="20" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/>
-            <!-- หลังคารถ + กระจกหน้า/หลัง -->
-            <rect x="367" y="95" width="66" height="60" rx="10" fill="#0f172a"/>
-            <path d="M 372 100 L 428 100 L 423 115 L 377 115 Z" fill="#38bdf8" opacity="0.8"/> <!-- กระจกหน้า -->
-            <path d="M 375 142 L 425 142 L 428 150 L 372 150 Z" fill="#38bdf8" opacity="0.5"/> <!-- กระจกหลัง -->
-            <!-- ไฟหน้า/ไฟท้าย -->
-            <rect x="362" y="77" width="16" height="5" rx="2" fill="#fff" filter="drop-shadow(0 0 4px #fff)"/>
-            <rect x="422" y="77" width="16" height="5" rx="2" fill="#fff" filter="drop-shadow(0 0 4px #fff)"/>
-            <rect x="365" y="173" width="20" height="4" rx="1" fill="#ef4444"/>
-            <rect x="415" y="173" width="20" height="4" rx="1" fill="#ef4444"/>
+            <!-- ล้อรถ 4 ข้าง -->
+            <rect x="351" y="85" width="6" height="20" rx="2" fill="#0f172a"/>
+            <rect x="443" y="85" width="6" height="20" rx="2" fill="#0f172a"/>
+            <rect x="351" y="145" width="6" height="20" rx="2" fill="#0f172a"/>
+            <rect x="443" y="145" width="6" height="20" rx="2" fill="#0f172a"/>
+
+            <!-- โครงสร้างตัวรถมนโค้ง -->
+            <rect x="356" y="72" width="88" height="110" rx="24" fill="#0284c7" stroke="#38bdf8" stroke-width="2.5"/>
+            <!-- ตัวถังหลังคา -->
+            <rect x="366" y="90" width="68" height="68" rx="14" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
+            <!-- กระจกหน้ามนโค้ง -->
+            <path d="M 372 118 C 372 100, 428 100, 428 118 Z" fill="#38bdf8" opacity="0.85"/>
+            <!-- กระจกหลังมนโค้ง -->
+            <path d="M 375 142 L 425 142 C 425 152, 375 152, 375 142 Z" fill="#38bdf8" opacity="0.5"/>
+            <!-- ไฟหน้าคู่ LED -->
+            <circle cx="372" cy="76" r="4" fill="#fff" filter="drop-shadow(0 0 6px #fff)"/>
+            <circle cx="428" cy="76" r="4" fill="#fff" filter="drop-shadow(0 0 6px #fff)"/>
+            <!-- ไฟท้าย -->
+            <rect x="366" y="178" width="18" height="3" rx="1.5" fill="#ef4444" filter="drop-shadow(0 0 3px #ef4444)"/>
+            <rect x="416" y="178" width="18" height="3" rx="1.5" fill="#ef4444" filter="drop-shadow(0 0 3px #ef4444)"/>
           </g>
 
           <!-- ข้อความสถานะด้านล่างช่อง -->
@@ -118,7 +135,7 @@
 
         <!-- แบนเนอร์เตือนเมื่อที่จอดรถเต็ม -->
         <g id="fullBanner" class="full-banner" opacity="0">
-          <rect x="120" y="235" width="300" height="42" class="full-banner-bg"/>
+          <rect x="120" y="235" width="300" height="42" class="full-banner-bg" rx="8"/>
           <text x="270" y="261" text-anchor="middle" class="full-banner-text">⚠️ PARKING LOT FULL</text>
         </g>
       </svg>
