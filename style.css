@@ -52,23 +52,17 @@ body {
 .brand-sub { font-family: var(--font-mono); font-size: 11px; color: var(--primary); letter-spacing: 1px; }
 
 .topbar-status { display: flex; align-items: center; gap: 20px; }
-.setup-link {
-  color: var(--text); text-decoration: none; font-size: 13px; font-weight: 600;
-  padding: 6px 14px; border-radius: 6px; background: rgba(255,255,255,0.05);
-  border: 1px solid var(--panel-border); transition: 0.2s;
-}
-.setup-link:hover { background: rgba(0, 242, 254, 0.1); border-color: var(--primary); }
 .clock { font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--text); letter-spacing: 1px; }
 .link-state { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); font-family: var(--font-mono); }
 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
 .dot.online { background: var(--green); box-shadow: 0 0 8px var(--green); }
 .dot.offline { background: var(--red); box-shadow: 0 0 8px var(--red); }
 
-/* Layout หลัก */
+/* Layout ขยายเต็มความกว้าง */
 .layout {
   position: relative; z-index: 1; display: grid;
-  grid-template-columns: 1.5fr 1fr; gap: 20px; padding: 24px 32px;
-  max-width: 1400px; margin: 0 auto;
+  grid-template-columns: 1.4fr 1fr; gap: 20px; padding: 24px 32px;
+  width: 100%;
 }
 
 .panel {
@@ -87,8 +81,8 @@ body {
 }
 .available-pill.full { color: var(--red); border-color: var(--red); background: rgba(255, 0, 85, 0.1); }
 
-/* SVG Elements */
-.schematic { width: 100%; height: auto; display: block; max-height: 500px; }
+/* SVG ขยายเต็มกล่อง */
+.schematic { width: 100%; height: auto; display: block; }
 
 .bay-label { fill: #f1f5f9; font-size: 16px; font-family: var(--font-main); }
 .sensor-dot { fill: var(--primary); filter: drop-shadow(0 0 5px var(--primary)); }
@@ -99,7 +93,6 @@ body {
 
 .car { transition: opacity 0.4s ease, transform 0.4s ease; }
 
-/* เลนถนนด้านล่าง */
 .road-dash { stroke: #1e293b; stroke-width: 2; stroke-dasharray: 8 6; }
 
 .full-banner-bg { fill: rgba(255, 0, 85, 0.95); }
@@ -128,7 +121,7 @@ body {
 
 /* Responsive Media Queries สำหรับ iPad และ มือถือ */
 @media (max-width: 1024px) {
-  .layout { grid-template-columns: 1fr; padding: 20px; gap: 20px; }
+  .layout { grid-template-columns: 1fr; padding: 16px; gap: 16px; }
   .readouts { grid-template-columns: repeat(2, 1fr); }
   .topbar { padding: 16px 20px; }
 }
@@ -139,7 +132,6 @@ body {
   .brand-text h1 { font-size: 16px; }
   .topbar-status { width: 100%; justify-content: space-between; gap: 10px; }
   .clock { font-size: 15px; }
-  .setup-link { font-size: 12px; padding: 5px 10px; }
   
   .layout { padding: 12px; gap: 14px; }
   .panel { padding: 14px; }
