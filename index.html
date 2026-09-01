@@ -17,93 +17,114 @@
       <span class="brand-mark">P</span>
       <div class="brand-text">
         <h1>SMART PARKING</h1>
-        <span class="brand-sub">ESP32 · REAL-TIME MONITOR</span>
+        <span class="brand-sub">ESP32 · ULTRASONIC REALTIME MONITOR</span>
       </div>
     </div>
     <div class="topbar-status">
+      <!-- ไม่มีปุ่มตั้งค่าระบบ -->
       <div class="clock" id="clock">--:--:--</div>
       <div class="link-state">
         <span class="dot" id="linkDot"></span>
-        <span id="linkLabel">กำลังเชื่อมต่อ...</span>
+        <span id="linkLabel">ขาดการเชื่อมต่อ</span>
       </div>
     </div>
   </header>
 
   <main class="layout">
-    <!-- ผังพื้นที่จอดรถ -->
+    <!-- ผังจำลองสถานะช่องจอดรถ -->
     <section class="panel schematic-panel">
       <div class="panel-head">
-        <span class="eyebrow">🚗 ผังพื้นที่จอดรถ (2 ช่อง)</span>
-        <span class="available-pill" id="availablePill">-- / -- ว่าง</span>
+        <span class="eyebrow">🏎️ ผังจำลองสถานะช่องจอดรถ</span>
+        <span class="available-pill" id="availablePill">-- / -- AVAILABLE</span>
       </div>
       
       <svg viewBox="0 0 540 320" class="schematic">
-        <!-- ทางเดินรถ -->
-        <rect x="0" y="140" width="540" height="40" class="road"/>
-        <line x1="0" y1="160" x2="540" y2="160" class="road-dash"/>
-
         <!-- ช่องที่ 1 -->
         <g id="bay1">
-          <rect x="70" y="30" width="150" height="100" class="bay-outline"/>
-          <text x="145" y="20" text-anchor="middle" class="bay-label">ช่องที่ 1</text>
-          <circle cx="145" cy="40" r="4" class="sensor-dot"/>
-          <line x1="145" y1="44" x2="145" y2="120" class="sensor-beam" id="beam1"/>
+          <!-- เส้นขอบส้มประ ซ้าย-ขวา -->
+          <line x1="70" y1="80" x2="70" y2="200" class="bay-line-orange"/>
+          <line x1="220" y1="80" x2="220" y2="200" class="bay-line-orange"/>
+          <line x1="70" y1="80" x2="220" y2="80" class="bay-line-top"/>
+          <line x1="70" y1="200" x2="220" y2="200" class="bay-line-bottom"/>
+
+          <text x="145" y="45" text-anchor="middle" class="bay-title">ที่จอด 1</text>
+          <text x="145" y="62" text-anchor="middle" class="bay-subtitle">(SENDER 1)</text>
+
+          <!-- ตัวยึดเซ็นเซอร์ -->
+          <rect x="130" y="93" width="30" height="10" rx="5" class="sensor-mount"/>
+          <circle cx="145" cy="98" r="4" class="sensor-dot"/>
+          <line x1="145" y1="103" x2="145" y2="190" class="sensor-beam" id="beam1"/>
           
-          <!-- กราฟิกรูปรถ ช่อง 1 -->
+          <!-- รถยนต์ -->
           <g id="car1" class="car" opacity="0">
-            <rect x="105" y="50" width="80" height="60" rx="12" class="car-body"/>
-            <rect x="115" y="60" width="60" height="40" rx="6" class="car-glass"/>
-            <circle cx="103" cy="58" r="3" class="car-light"/>
-            <circle cx="187" cy="58" r="3" class="car-light"/>
+            <rect x="105" y="115" width="80" height="60" rx="12" class="car-body"/>
+            <rect x="115" y="125" width="60" height="40" rx="6" class="car-glass"/>
+            <circle cx="103" cy="123" r="3" class="car-light"/>
+            <circle cx="187" cy="123" r="3" class="car-light"/>
           </g>
-          <text x="145" y="150" text-anchor="middle" class="bay-status" id="status1">--</text>
+
+          <text x="145" y="225" text-anchor="middle" class="bay-status" id="status1">--</text>
         </g>
 
         <!-- ช่องที่ 2 -->
         <g id="bay2">
-          <rect x="320" y="30" width="150" height="100" class="bay-outline"/>
-          <text x="395" y="20" text-anchor="middle" class="bay-label">ช่องที่ 2</text>
-          <circle cx="395" cy="40" r="4" class="sensor-dot"/>
-          <line x1="395" y1="44" x2="395" y2="120" class="sensor-beam" id="beam2"/>
+          <!-- เส้นขอบส้มประ ซ้าย-ขวา -->
+          <line x1="320" y1="80" x2="320" y2="200" class="bay-line-orange"/>
+          <line x1="470" y1="80" x2="470" y2="200" class="bay-line-orange"/>
+          <line x1="320" y1="80" x2="470" y2="80" class="bay-line-top"/>
+          <line x1="320" y1="200" x2="470" y2="200" class="bay-line-bottom"/>
+
+          <text x="395" y="45" text-anchor="middle" class="bay-title">ที่จอด 2</text>
+          <text x="395" y="62" text-anchor="middle" class="bay-subtitle">(SENDER 2)</text>
+
+          <rect x="380" y="93" width="30" height="10" rx="5" class="sensor-mount"/>
+          <circle cx="395" cy="98" r="4" class="sensor-dot"/>
+          <line x1="395" y1="103" x2="395" y2="190" class="sensor-beam" id="beam2"/>
           
-          <!-- กราฟิกรูปรถ ช่อง 2 -->
+          <!-- รถยนต์ -->
           <g id="car2" class="car" opacity="0">
-            <rect x="355" y="50" width="80" height="60" rx="12" class="car-body"/>
-            <rect x="365" y="60" width="60" height="40" rx="6" class="car-glass"/>
-            <circle cx="353" cy="58" r="3" class="car-light"/>
-            <circle cx="437" cy="58" r="3" class="car-light"/>
+            <rect x="355" y="115" width="80" height="60" rx="12" class="car-body"/>
+            <rect x="365" y="125" width="60" height="40" rx="6" class="car-glass"/>
+            <circle cx="353" cy="123" r="3" class="car-light"/>
+            <circle cx="437" cy="123" r="3" class="car-light"/>
           </g>
-          <text x="395" y="150" text-anchor="middle" class="bay-status" id="status2">--</text>
+
+          <text x="395" y="225" text-anchor="middle" class="bay-status" id="status2">--</text>
         </g>
+
+        <!-- พื้นที่เลนถนนด้านล่าง -->
+        <rect x="15" y="245" width="510" height="65" rx="6" class="road-bg"/>
+        <line x1="15" y1="277" x2="510" y2="277" class="road-dash"/>
+        <text x="270" y="295" text-anchor="middle" class="road-text">LANE - ONE WAY ►►►</text>
 
         <!-- ป้าย FULL -->
         <g id="fullBanner" class="full-banner" opacity="0">
-          <rect x="120" y="200" width="300" height="60" class="full-banner-bg"/>
-          <text x="270" y="238" text-anchor="middle" class="full-banner-text">⚠️ ที่จอดรถเต็มแล้ว</text>
+          <rect x="120" y="130" width="300" height="60" rx="10" class="full-banner-bg"/>
+          <text x="270" y="168" text-anchor="middle" class="full-banner-text">⚠️ PARKING FULL</text>
         </g>
       </svg>
     </section>
 
-    <!-- ข้อมูลระยะเซ็นเซอร์ -->
+    <!-- SENSOR TELEMETRY -->
     <section class="panel readout-panel">
-      <div class="panel-head"><span class="eyebrow">📡 ระยะเซ็นเซอร์</span></div>
+      <div class="panel-head"><span class="eyebrow">📡 SENSOR TELEMETRY</span></div>
       <div class="readouts">
         <div class="readout-card" id="card1">
-          <span class="readout-label">ช่องที่ 1</span>
+          <span class="readout-label">PARKING 1 DISTANCE</span>
           <span class="readout-value"><span id="dist1">--</span><small>cm</small></span>
-          <span class="readout-tag" id="tag1">รอข้อมูล</span>
+          <span class="readout-tag" id="tag1">CONNECTING</span>
         </div>
         <div class="readout-card" id="card2">
-          <span class="readout-label">ช่องที่ 2</span>
+          <span class="readout-label">PARKING 2 DISTANCE</span>
           <span class="readout-value"><span id="dist2">--</span><small>cm</small></span>
-          <span class="readout-tag" id="tag2">รอข้อมูล</span>
+          <span class="readout-tag" id="tag2">CONNECTING</span>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    อัปเดตล่าสุด: <span id="lastUpdate">--</span>
+    LAST SYNC TIME: <span id="lastUpdate">--:--:--</span>
   </footer>
 
   <script src="script.js"></script>
